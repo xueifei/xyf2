@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shendu.ssm.mapper.StudentDetailDao">
+    <insert id="addStu">
+        insert into student_detail(name,address,stu_class,phone,parent_phone,identity)
+        values(#{name}, #{address}, #{stuClass}, #{phone}, #{parentPhone}, #{identity})
+    </insert>
+    <update id="updateStu">
+        update student_detail set name = #{name},address = #{address},stu_class = #{stuClass},phone = #{phone},
+        parent_phone = #{parentPhone},identity = #{identity} where id = #{id}
+    </update>
+    <delete id="deleteStu">
+        delete from student_detail where id = #{id}
+    </delete>
+    <select id="findAll" resultType="com.shendu.ssm.domain.StudentDetail">
+        select * from student_detail
+    </select>
+    <select id="findById" resultType="com.shendu.ssm.domain.StudentDetail">
+        select * from student_detail where  id = #{id}
+    </select>
+    <update id="updateStuClassBatch" parameterType="java.util.Map">
+        update student_detail set stu_class = #{stuClass,jdbcType=VARCHAR} where id in
+        <foreach collection="list" item="id" open="(" close=")" separator="," >
+            #{id,jdbcType=INTEGER}
+        </foreach>
+    </update>
+</mapper>

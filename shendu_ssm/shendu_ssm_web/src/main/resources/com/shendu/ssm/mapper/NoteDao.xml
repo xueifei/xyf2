@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shendu.ssm.mapper.NoteDao" >
+    <insert id="addNote">
+        insert into note(phone, name, status, template_id)
+        values (#{phone},#{name},#{status},#{template_id})
+    </insert>
+    <select id="findAll" resultType="com.shendu.ssm.domain.Note">
+        select * from note
+    </select>
+    <select id="findList" resultType="com.shendu.ssm.domain.Note">
+        select * from note where id = #{id}
+    </select>
+    <update id="updateNote">
+        update noto set  phone = #{phone}, name = #{name}, status = #{status},
+        template_id = #{templateId} where id = #{id}
+    </update>
+    <delete id="deleteNote">
+        delete from note where id = #{id}
+    </delete>
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into note(phone, name, status, template_id)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            ( #{item.phone,jdbcType=VARCHAR}, #{item.name,jdbcType=VARCHAR},#{item.status,jdbcType=INTEGER},#{item.templateId,jdbcType=INTEGER})
+        </foreach>
+    </insert>
+</mapper>
