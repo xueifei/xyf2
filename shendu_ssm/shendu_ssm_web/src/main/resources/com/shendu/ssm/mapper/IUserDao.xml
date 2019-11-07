@@ -16,7 +16,7 @@
         select * from USER
     </select>
 
-    <insert id="insertUser">
+    <insert id="insertUser" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
       INSERT into user(name,password,salt) VALUES (#{name},#{password},#{salt})
     </insert>
 

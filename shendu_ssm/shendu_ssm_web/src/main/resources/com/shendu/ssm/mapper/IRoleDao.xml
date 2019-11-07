@@ -13,7 +13,7 @@
     </select>
 
 
-    <insert id="insertRole">
+    <insert id="insertRole" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         INSERT into role(name,desc_) VALUES (#{name},#{desc})
     </insert>
 

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -114,6 +115,24 @@
 
 					</div>
 				</div>
+
+					<!--下拉框-->
+					<div class="tab-pane" id="tab-select">
+						<div class="row data-type">
+							<div class="col-md-2 title">添加角色[输入多选]</div>
+							<div class="col-md-10 data">
+								<select class="form-control select2" multiple="multiple" data-placeholder="可多选" style="width: 100%;" name="roleIds">
+									<c:forEach items="${listRole}" var="r">
+									<option value="${r.id}">${r.name}</option>
+									</c:forEach>
+								</select>
+							</div>
+
+
+
+						</div>
+					</div>
+					<!--下拉框/-->
 				<!--订单信息/--> <!--工具栏-->
 				<div class="box-tools text-center">
 					<button type="submit" class="btn bg-maroon">保存</button>
