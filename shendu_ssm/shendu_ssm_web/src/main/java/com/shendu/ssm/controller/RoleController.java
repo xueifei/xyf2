@@ -50,16 +50,17 @@ public class RoleController {
 	}
 
 	@RequestMapping("addRole")
-	public String list(Role role) {
-		System.out.println(role.getName());
-		System.out.println(role.getDesc());
+	public String list(Role role,long[] permissionIds) {
+
 		roleService.addRole(role);
+		rolePermissionService.updateRolePermission(role, permissionIds);
 		return "redirect:listRole";
 	}
 
 	@RequestMapping("addRole1")
-	public String addRole1() {
-
+	public String addRole1(Model model) {
+		List<Permission> ps = permissionService.getPermissionList();
+		model.addAttribute("ps", ps);
 		return "addRole";
 	}
 

@@ -113,17 +113,34 @@
 								placeholder="密码" value="">
 						</div>
 
-					</div>
 
+					</div>
 				</div>
+
+					<!--下拉框-->
+					<div class="tab-pane" id="tab-select">
+						<div class="row data-type">
+							<div class="col-md-2 title">添加角色[输入多选]</div>
+							<div class="col-md-10 data">
+								<select class="form-control select2" multiple="multiple" data-placeholder="可多选" style="width: 100%;" name="roleIds">
+									<c:forEach items="${listRole}" var="r">
+									<option value="${r.id}">${r.name}</option>
+									</c:forEach>
+								</select>
+							</div>
+
+
+
+						</div>
+					</div>
+					<!--下拉框/-->
 				<!--订单信息/--> <!--工具栏-->
 				<div class="box-tools text-center">
 					<button type="submit" class="btn bg-maroon">保存</button>
 					<button type="button" class="btn bg-default"
 						onclick="history.back(-1);">返回</button>
 				</div>
-				<!--工具栏/-->
-				</section>
+				<!--工具栏/--> </section>
 				<!-- 正文区域 /-->
 			</form>
 		</div>
@@ -227,7 +244,6 @@
 		src="${pageContext.request.contextPath}/plugins/bootstrap-slider/bootstrap-slider.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>
-	<script src="${pageContext.request.contextPath}/js/jquery-1.12.4.js"></script>
 
 	<script>
 		$(document).ready(function() {

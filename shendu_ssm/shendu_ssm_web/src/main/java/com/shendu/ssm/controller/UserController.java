@@ -57,7 +57,7 @@ public class UserController {
 	 * 添加用户
 	 */
 	@RequestMapping("addUser")
-	public String add(Model model, String name,@RequestParam(name = "password", required = true, defaultValue = "123456") String password) {
+	public String add(Model model, String name,@RequestParam(name = "password", required = true, defaultValue = "123456") String password,long[] roleIds) {
 		String salt = new SecureRandomNumberGenerator().nextBytes().toString();	// 盐
 		int times = 2;	// 加盐次数
 		String algorithmName = "md5";	// MD5 加密
@@ -69,12 +69,15 @@ public class UserController {
 		user.setPassword(encodedPassword);
 		user.setSalt(salt);
 		userService.addUser(user);
-
+		// 修改 用户角色 表
+		userRoleService.editUserRole(user, roleIds);
 		return "redirect:listUser";
 	}
 
 	@RequestMapping("addUser1")
 	public String add1(Model model) {
+		List<Role> listRole = roleService.selectlistRole();
+		model.addAttribute("listRole", listRole);
 
 		return "addUser";
 	}
@@ -132,6 +135,4 @@ public class UserController {
 		userService.deleteUser(id);
 		return "redirect:listUser";
 	}
-
-
 }
