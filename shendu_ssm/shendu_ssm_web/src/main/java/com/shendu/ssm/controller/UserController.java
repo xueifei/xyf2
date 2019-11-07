@@ -59,19 +59,15 @@ public class UserController {
 	 */
 	@RequestMapping("addUser")
 	public String add(Model model, String name,@RequestParam(name = "password", required = true, defaultValue = "123456") String password,long[] roleIds) {
-		String salt = new SecureRandomNumberGenerator().nextBytes().toString();	// 盐
-		int times = 2;	// 加盐次数
-		String algorithmName = "md5";	// MD5 加密
-		// 加密 密码
-		String encodedPassword = new SimpleHash(algorithmName, password, salt, times).toString();
+
 		// 添加用户
 		User user = new User();
-		user.setName(name);
-		user.setPassword(encodedPassword);
-		user.setSalt(salt);
-		userService.addUser(user);
+        User user1 = editPasswordAndSalt(user, password);
+        user1.setName(name);
+
+		userService.addUser(user1);
 		// 修改 用户角色 表
-		userRoleService.editUserRole(user, roleIds);
+		userRoleService.editUserRole(user1, roleIds);
 		return "redirect:listUser";
 	}
 
@@ -111,19 +107,18 @@ public class UserController {
 		String password = user.getPassword();
 		// 如果在修改的时候没有设置密码，就表示不改动密码
 		if (user.getPassword().length() != 0) {
-			String salt = new SecureRandomNumberGenerator().nextBytes().toString();
-			int times = 2;
-			String algorithmName = "md5";
-			String encodedPassword = new SimpleHash(algorithmName, password, salt, times).toString();
-			user.setSalt(salt);
-			user.setPassword(encodedPassword);
-		} else{
+            User user1 = editPasswordAndSalt(user, password);
+            // 修改用户信息
+            userService.updateUser(user1);
+        } else{
 			User u = userService.getUserByID(user.getId());
 			user.setPassword(u.getPassword());
+			user.setSalt(u.getSalt());
+            // 修改用户信息
+            userService.updateUser(user);
 		}
 
-		// 修改用户信息
-		userService.updateUser(user);
+
 
 		return "redirect:listUser";
 	}
@@ -142,13 +137,19 @@ public class UserController {
 	public String editPassword(@RequestParam("name")String name){
 		User user = userService.getUserByName(name);
 		String password = "123456";
-		String salt = new SecureRandomNumberGenerator().nextBytes().toString();
-		int times = 2;
-		String algorithmName = "md5";
-		String encodedPassword = new SimpleHash(algorithmName, password, salt, times).toString();
-		user.setSalt(salt);
-		user.setPassword(encodedPassword);
-		userService.updateUser(user);
+        User user1 = editPasswordAndSalt(user, password);
+        userService.updateUser(user1);
 		return "index";
 	}
+
+	private User editPasswordAndSalt(User user,String password){
+        String salt = new SecureRandomNumberGenerator().nextBytes().toString();	// 盐
+        int times = 2;	// 加盐次数
+        String algorithmName = "md5";	// MD5 加密
+        // 加密 密码
+        String encodedPassword = new SimpleHash(algorithmName, password, salt, times).toString();
+        user.setSalt(salt);
+        user.setPassword(encodedPassword);
+        return user;
+    }
 }
