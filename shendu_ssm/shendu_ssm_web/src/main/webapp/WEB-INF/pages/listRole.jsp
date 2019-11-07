@@ -227,7 +227,7 @@
 				<b>Version</b> 1.0.8
 			</div>
 			<strong>Copyright &copy; 2019 <a
-				href="https://m.51shendu.cn/index">北京深度</a>.
+				href="https://m.51shendu.cn/index">51深度</a>.
 			</strong> All rights reserved. </footer>
 			<!-- 底部导航 /-->
 

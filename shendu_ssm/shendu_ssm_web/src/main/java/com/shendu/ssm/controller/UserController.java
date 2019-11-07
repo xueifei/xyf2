@@ -10,6 +10,7 @@ import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -134,5 +135,20 @@ public class UserController {
 	public String delete(long id) {
 		userService.deleteUser(id);
 		return "redirect:listUser";
+	}
+
+	@Transactional
+	@RequestMapping("editPassword")
+	public String editPassword(@RequestParam("name")String name){
+		User user = userService.getUserByName(name);
+		String password = "123456";
+		String salt = new SecureRandomNumberGenerator().nextBytes().toString();
+		int times = 2;
+		String algorithmName = "md5";
+		String encodedPassword = new SimpleHash(algorithmName, password, salt, times).toString();
+		user.setSalt(salt);
+		user.setPassword(encodedPassword);
+		userService.updateUser(user);
+		return "index";
 	}
 }
