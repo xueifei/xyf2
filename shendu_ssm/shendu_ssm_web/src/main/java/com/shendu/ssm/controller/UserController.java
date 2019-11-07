@@ -57,7 +57,7 @@ public class UserController {
 	 * 添加用户
 	 */
 	@RequestMapping("addUser")
-	public String add(Model model, String name, String password) {
+	public String add(Model model, String name,@RequestParam(name = "password", required = true, defaultValue = "123456") String password) {
 		String salt = new SecureRandomNumberGenerator().nextBytes().toString();	// 盐
 		int times = 2;	// 加盐次数
 		String algorithmName = "md5";	// MD5 加密
@@ -74,8 +74,7 @@ public class UserController {
 	}
 
 	@RequestMapping("addUser1")
-	public String add1() {
-
+	public String add1(Model model) {
 
 		return "addUser";
 	}
@@ -133,4 +132,6 @@ public class UserController {
 		userService.deleteUser(id);
 		return "redirect:listUser";
 	}
+
+
 }

@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -111,8 +113,8 @@
 								placeholder="密码" value="">
 						</div>
 
-
 					</div>
+
 				</div>
 				<!--订单信息/--> <!--工具栏-->
 				<div class="box-tools text-center">
@@ -120,7 +122,8 @@
 					<button type="button" class="btn bg-default"
 						onclick="history.back(-1);">返回</button>
 				</div>
-				<!--工具栏/--> </section>
+				<!--工具栏/-->
+				</section>
 				<!-- 正文区域 /-->
 			</form>
 		</div>
@@ -224,6 +227,7 @@
 		src="${pageContext.request.contextPath}/plugins/bootstrap-slider/bootstrap-slider.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>
+	<script src="${pageContext.request.contextPath}/js/jquery-1.12.4.js"></script>
 
 	<script>
 		$(document).ready(function() {

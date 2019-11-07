@@ -4,6 +4,7 @@ import com.shendu.ssm.domain.User;
 import com.shendu.ssm.service.IPermissionService;
 import com.shendu.ssm.service.IRoleService;
 import com.shendu.ssm.service.IUserService;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -64,5 +65,10 @@ public class DatabaseRealm extends AuthorizingRealm {
 		authorizationInfo.setStringPermissions(permissions);
 		authorizationInfo.setRoles(roles);
 		return authorizationInfo;
+	}
+
+	public void clearCached() {
+		PrincipalCollection principals = SecurityUtils.getSubject().getPrincipals();
+		super.clearCache(principals);
 	}
 }

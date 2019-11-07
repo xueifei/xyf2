@@ -15,14 +15,14 @@
     </resultMap>
     <!-- 查找所有的权限 -->
     <select id="findAll" parameterType="Permission" resultMap="PermissionResult">
-		select * from permission order by sort asc
+		select * from permission order by sort desc
 	</select>
     <select id="selectByPrimaryKey" resultMap="PermissionResult">
-        select * from permission WHERE id = #{id};
+        select * from permission WHERE id = #{id}
     </select>
     
     <select id="selectPermissionList" resultMap="PermissionResult">
-        select * from permission ORDER BY id asc
+        select * from permission ORDER BY id desc
     </select>
 
     <select id="PermissionList" resultMap="PermissionResult">

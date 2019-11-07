@@ -26,7 +26,8 @@
     
     <update id="updateUser">
         UPDATE user set name=#{name},
-        password=#{password}
+        password=#{password},
+        salt=#{salt}
       WHERE id = #{id}
     </update>
 

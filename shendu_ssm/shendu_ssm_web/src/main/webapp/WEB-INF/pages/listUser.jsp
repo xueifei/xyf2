@@ -183,6 +183,7 @@
 					</div>
 					<!-- /.box-body -->
 
+
 					<!-- .box-footer-->
 					<div class="box-footer">
 						<div class="pull-left">
