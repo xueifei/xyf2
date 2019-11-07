@@ -47,8 +47,7 @@ public class PermissionController {
 
 	@RequestMapping("addPermission")
 	public String list(Permission permission) {
-		System.out.println(permission.getName());
-		System.out.println(permission.getDesc());
+
 		permissionService.addPermission(permission);
 		return "redirect:listPermission";
 	}
