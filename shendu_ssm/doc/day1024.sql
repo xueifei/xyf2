@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50637
 File Encoding         : 65001
 
-Date: 2019-11-08 22:05:11
+Date: 2019-11-08 22:49:42
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -32,7 +32,6 @@ CREATE TABLE `attendance` (
 -- ----------------------------
 -- Records of attendance
 -- ----------------------------
-INSERT INTO `attendance` VALUES ('1', '张三', '1899-12-31 00:00:00', '1', '2019-11-08 22:33:47', '1');
 INSERT INTO `attendance` VALUES ('2', '李四', '2019-10-24 00:00:00', '0', '2019-11-08 22:33:51', '2');
 INSERT INTO `attendance` VALUES ('3', '小五', '2019-10-24 00:00:00', '3', '2019-11-02 22:33:54', '3');
 INSERT INTO `attendance` VALUES ('4', '张三', '1899-12-31 00:00:00', '1', '2019-11-02 22:34:00', '3');
@@ -94,7 +93,6 @@ INSERT INTO `note` VALUES ('19', '15666363902', '张三', '1', '2');
 INSERT INTO `note` VALUES ('20', '15666363902', '张三', '1', '3');
 INSERT INTO `note` VALUES ('21', '15666363902', '小五', '1', '1');
 INSERT INTO `note` VALUES ('22', '15666363902', '张三', '1', '2');
-INSERT INTO `note` VALUES ('23', '15666363902', '张三', '1', '3');
 
 -- ----------------------------
 -- Table structure for permission
@@ -109,7 +107,7 @@ CREATE TABLE `permission` (
   `tag_type` int(11) DEFAULT NULL COMMENT '菜单级别',
   `sort` int(11) DEFAULT NULL COMMENT '排序优先级',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of permission
@@ -151,13 +149,13 @@ CREATE TABLE `role` (
   `name` varchar(100) DEFAULT NULL,
   `desc_` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of role
 -- ----------------------------
 INSERT INTO `role` VALUES ('1', 'admin', '超级管理员1');
-INSERT INTO `role` VALUES ('11', 'ab', 'admin2');
+INSERT INTO `role` VALUES ('12', 'ab', 'admin1');
 
 -- ----------------------------
 -- Table structure for role_permission
@@ -168,7 +166,7 @@ CREATE TABLE `role_permission` (
   `rid` bigint(20) DEFAULT NULL,
   `pid` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=151 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=175 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of role_permission
@@ -186,6 +184,30 @@ INSERT INTO `role_permission` VALUES ('147', '11', '3');
 INSERT INTO `role_permission` VALUES ('148', '11', '2');
 INSERT INTO `role_permission` VALUES ('149', '11', '4');
 INSERT INTO `role_permission` VALUES ('150', '11', '6');
+INSERT INTO `role_permission` VALUES ('151', '1', '14');
+INSERT INTO `role_permission` VALUES ('152', '1', '15');
+INSERT INTO `role_permission` VALUES ('153', '1', '16');
+INSERT INTO `role_permission` VALUES ('154', '1', '17');
+INSERT INTO `role_permission` VALUES ('155', '1', '18');
+INSERT INTO `role_permission` VALUES ('156', '1', '19');
+INSERT INTO `role_permission` VALUES ('157', '1', '20');
+INSERT INTO `role_permission` VALUES ('158', '1', '21');
+INSERT INTO `role_permission` VALUES ('159', '1', '22');
+INSERT INTO `role_permission` VALUES ('160', '1', '23');
+INSERT INTO `role_permission` VALUES ('161', '1', '24');
+INSERT INTO `role_permission` VALUES ('162', '1', '25');
+INSERT INTO `role_permission` VALUES ('163', '1', '26');
+INSERT INTO `role_permission` VALUES ('164', '1', '27');
+INSERT INTO `role_permission` VALUES ('165', '1', '28');
+INSERT INTO `role_permission` VALUES ('166', '1', '29');
+INSERT INTO `role_permission` VALUES ('167', '1', '30');
+INSERT INTO `role_permission` VALUES ('168', '1', '31');
+INSERT INTO `role_permission` VALUES ('169', '12', '31');
+INSERT INTO `role_permission` VALUES ('170', '12', '30');
+INSERT INTO `role_permission` VALUES ('171', '12', '29');
+INSERT INTO `role_permission` VALUES ('172', '12', '28');
+INSERT INTO `role_permission` VALUES ('173', '12', '27');
+INSERT INTO `role_permission` VALUES ('174', '12', '26');
 
 -- ----------------------------
 -- Table structure for student_detail
@@ -200,7 +222,7 @@ CREATE TABLE `student_detail` (
   `parent_phone` varchar(50) COLLATE utf8_bin DEFAULT NULL COMMENT '家长手机号',
   `identity` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '身份证',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of student_detail
@@ -237,13 +259,13 @@ CREATE TABLE `user` (
   `password` varchar(100) DEFAULT NULL,
   `salt` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', 'zhang3', 'a7d59dfc5332749cb801f86a24f5f590', 'e5ykFiNwShfCXvBRPr3wXg==');
-INSERT INTO `user` VALUES ('2', 'li4', 'b267848920e4bd5e5b44971e0ae19f88', '57XE8mDJ3/+BtxI2gHizIQ==');
+INSERT INTO `user` VALUES ('1', 'zhang3', 'ec0e95eb0cea5e7a3f0a051337400740', 'HbGMeD4FhGa1SgceuS/Mdw==');
+INSERT INTO `user` VALUES ('6', 'li4', '3f39799388212f564e2c200959f27d93', 'ZQuHRh4wqplN/3H7dQadtg==');
 
 -- ----------------------------
 -- Table structure for user_role
@@ -254,10 +276,13 @@ CREATE TABLE `user_role` (
   `uid` bigint(20) DEFAULT NULL,
   `rid` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user_role
 -- ----------------------------
-INSERT INTO `user_role` VALUES ('45', '1', '1');
 INSERT INTO `user_role` VALUES ('68', '2', '11');
+INSERT INTO `user_role` VALUES ('69', null, '12');
+INSERT INTO `user_role` VALUES ('70', null, '1');
+INSERT INTO `user_role` VALUES ('71', '6', '12');
+INSERT INTO `user_role` VALUES ('72', '1', '1');

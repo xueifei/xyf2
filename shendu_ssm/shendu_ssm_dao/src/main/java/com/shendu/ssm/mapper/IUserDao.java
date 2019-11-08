@@ -21,4 +21,6 @@ public interface IUserDao {
 	void updateUser(User user);
 
     List<User> fuzzySearchUser(@Param("name") String name);
+
+    User editPassword(String name);
 }
