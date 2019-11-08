@@ -121,4 +121,17 @@ public class AttendanceController {
         model.addAttribute("mess",isTrue?"删除成功":"删除失败");
         return "redirect:findByCreateDate";
     }
+
+    /**
+     * 模糊查询xxxxx
+     */
+    @RequestMapping("fuzzyAtt")
+    public String fuzzyAtt(Model model,String name) {
+        //System.out.println(name);
+        List<Attendance> list = attendanceService.fuzzyAtt(name);
+        //PageInfo就是一个分页Bean
+        PageInfo listAtt = new PageInfo(list);
+        model.addAttribute("attendanceList",listAtt);
+        return "attendance";
+    }
 }

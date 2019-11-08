@@ -110,7 +110,7 @@
 						<div class="col-md-2 title">密码</div>
 						<div class="col-md-4 data">
 							<input type="password" class="form-control" name="password"
-								placeholder="密码" value="">
+								placeholder="留空表示使用默认密码123456" value="">
 						</div>
 
 

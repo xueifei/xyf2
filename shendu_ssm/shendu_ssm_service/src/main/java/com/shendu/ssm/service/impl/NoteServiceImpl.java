@@ -64,4 +64,9 @@ public class NoteServiceImpl implements NoteService {
     public int insertBatch(List<Note> notes) {
         return noteDao.insertBatch(notes);
     }
+
+    @Override
+    public List<Note> fuzzyNote(String name) {
+        return noteDao.fuzzyNote(name);
+    }
 }

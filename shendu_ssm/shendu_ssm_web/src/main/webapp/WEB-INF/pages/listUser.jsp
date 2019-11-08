@@ -118,13 +118,24 @@
 									</div>
 								</div>
 							</div>
-							<div class="box-tools pull-right">
-								<div class="has-feedback">
-									<input type="text" class="form-control input-sm"
-										placeholder="搜索"> <span
-										class="glyphicon glyphicon-search form-control-feedback"></span>
-								</div>
-							</div>
+                            <form action="${pageContext.request.contextPath}/admin/fuzzySearchUser"method="post">
+                                <div class="box-tools pull-right">
+                                    <div class="input-group input-group-sm" style="width: 150px;">
+                                        <input type="text" name="name" class="form-control pull-right" placeholder="根据名字查询">
+
+                                        <div class="input-group-btn">
+                                            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <%--<form action="${pageContext.request.contextPath}/admin/fuzzySearchUser"method="post">--%>
+                                <%--<div class="col-md-4 data1"><input type="text" class="form-control"  name="name"--%>
+                                                                   <%--placeholder="根据名字模糊查询" value="">--%>
+                                <%--</div>--%>
+                                <%--<button type="submit" class="btn bg-maroon">搜索</button>--%>
+                            <%--</form>--%>
+
 							<!--工具栏/-->
 
 							<!--数据列表-->

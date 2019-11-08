@@ -3,6 +3,7 @@ package com.shendu.ssm.mapper;
 
 
 import com.shendu.ssm.domain.User;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -18,5 +19,6 @@ public interface IUserDao {
 	User getUserByID(long id);
 
 	void updateUser(User user);
-	User editPassword(String name);
+
+    List<User> fuzzySearchUser(@Param("name") String name);
 }

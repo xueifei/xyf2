@@ -114,4 +114,13 @@ public class RoleController {
 
 		return "xiang";
 	}
+    @RequestMapping("fuzzyRole")
+    public String fuzzyRole(String name,Model model){
+        List<Role> list = roleService.fuzzyRole(name);
+        PageInfo rs = new PageInfo(list);
+        model.addAttribute("rs",rs);
+        return "listRole";
+    }
+
+
 }

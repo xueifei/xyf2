@@ -13,4 +13,6 @@ public interface NoteService {
     Note findList(int id);
 
     int insertBatch(List<Note> notes);
+
+    List <Note> fuzzyNote(String name);
 }

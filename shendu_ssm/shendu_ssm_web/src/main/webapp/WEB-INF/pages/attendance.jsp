@@ -116,13 +116,17 @@
 									</div>
 								</div>
 							</div>
-							<div class="box-tools pull-right">
-								<div class="has-feedback">
-									<input type="text" class="form-control input-sm"
-										placeholder="搜索"> <span
-										class="glyphicon glyphicon-search form-control-feedback"></span>
-								</div>
-							</div>
+                            <form action="${pageContext.request.contextPath}/attendance/fuzzyAtt"method="post">
+                                <div class="box-tools pull-right">
+                                    <div class="input-group input-group-sm" style="width: 150px;">
+                                        <input type="text" name="name" class="form-control pull-right" placeholder="根据姓名、状态查询">
+
+                                        <div class="input-group-btn">
+                                            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
 							<!--工具栏/-->
 
 							<!--数据列表-->

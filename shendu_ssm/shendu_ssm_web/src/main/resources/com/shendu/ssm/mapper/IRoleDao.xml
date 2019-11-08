@@ -24,4 +24,18 @@
     <delete id="deleteRoleByID">
         DELETE FROM role WHERE id = #{id}
     </delete>
+
+    <!--模糊查询-->
+
+    <select id="fuzzyRole" resultType="Role" parameterType="java.lang.String">
+
+        select * from role
+        <where>
+            <if test="name!=null and name!=''"> name like concat('%',#{name},'%')</if>
+
+            <!-- <if test="id!=null and name!=''">or id like concat('%',#{username},'%')</if>-->
+
+            <!--<if test="username!=null and username!=''">or  userpwd like concat('%',#{username},'%')</if>-->
+        </where>
+    </select>
 </mapper>

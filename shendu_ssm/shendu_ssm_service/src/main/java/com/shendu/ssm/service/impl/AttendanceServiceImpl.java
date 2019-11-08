@@ -196,4 +196,10 @@ public class AttendanceServiceImpl implements AttendanceService {
         }
         return false;
     }
+
+
+    @Override
+    public List<Attendance> fuzzyAtt(String name) {
+        return attendanceDao.fuzzyAtt(name);
+    }
 }

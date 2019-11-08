@@ -31,4 +31,7 @@ public interface AttendanceService {
     List<Attendance> findByCreateDate();
 
     List<Note> MessageSend(List<Attendance> byCreateDate) throws ParseException;
+
+    //模糊查询
+    List <Attendance> fuzzyAtt(String name);
 }

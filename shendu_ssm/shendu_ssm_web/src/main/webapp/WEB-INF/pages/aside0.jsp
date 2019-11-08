@@ -20,7 +20,7 @@
 			type: 'get',
 			contentType: 'application/json;charset=utf-8',
 			success: function (data) {
-				console.log(data);
+				/*console.log(data);*/
 				var str = '<li class="header">菜单</li><li id="admin-index"><a href="${pageContext.request.contextPath}/index"><i class="fa fa-dashboard"></i> <span>首页</span></a></li>';
 				if (data != null) {
 					for (var i = 0; i < data.length; i++) {
@@ -43,7 +43,7 @@
 					}
 				}
 
-				console.log(str);
+				/*console.log(str);*/
 				$("#sidebar").html(str);
 			}
 		});

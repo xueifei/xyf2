@@ -118,13 +118,17 @@
 									</div>
 								</div>
 							</div>
-							<div class="box-tools pull-right">
-								<div class="has-feedback">
-									<input type="text" class="form-control input-sm"
-										placeholder="搜索"> <span
-										class="glyphicon glyphicon-search form-control-feedback"></span>
-								</div>
-							</div>
+                            <form action="${pageContext.request.contextPath}/admin/fuzzyRole"method="post">
+                                <div class="box-tools pull-right">
+                                    <div class="input-group input-group-sm" style="width: 150px;">
+                                        <input type="text" name="name" class="form-control pull-right" placeholder="根据姓名查询">
+
+                                        <div class="input-group-btn">
+                                            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
 							<!--工具栏/-->
 
 							<!--数据列表-->
@@ -227,8 +231,8 @@
 			<div class="pull-right hidden-xs">
 				<b>Version</b> 1.0.8
 			</div>
-			<strong>Copyright &copy; 2014-2017 <a
-				href="http://www.itcast.cn">研究院研发部</a>.
+			<strong>Copyright &copy; 2019 <a
+				href="https://m.51shendu.cn/index">51深度</a>.
 			</strong> All rights reserved. </footer>
 			<!-- 底部导航 /-->
 

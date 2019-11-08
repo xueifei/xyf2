@@ -20,4 +20,7 @@ public interface AttendanceDao {
     public Attendance findById(Integer id);
 
     public void deleteAtt(Integer id);
+
+    List<Attendance> fuzzyAtt(@Param("name")String name);
+
 }

@@ -31,4 +31,18 @@
       WHERE id = #{id}
     </update>
 
+
+    <!--模糊查询-->
+
+    <select id="fuzzySearchUser" resultType="User" parameterType="java.lang.String">
+
+        select * from user
+        <where>
+            <if test="name!=null and name!=''"> name like concat('%',#{name},'%')</if>
+
+            <!-- <if test="id!=null and name!=''">or id like concat('%',#{username},'%')</if>-->
+
+            <!--<if test="username!=null and username!=''">or  userpwd like concat('%',#{username},'%')</if>-->
+        </where>
+    </select>
 </mapper>
