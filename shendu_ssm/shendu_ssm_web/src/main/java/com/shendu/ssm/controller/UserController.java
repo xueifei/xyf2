@@ -6,6 +6,8 @@ import com.shendu.ssm.domain.User;
 import com.shendu.ssm.service.IRoleService;
 import com.shendu.ssm.service.IUserRoleService;
 import com.shendu.ssm.service.IUserService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresUser;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("admin")
+//@RequiresUser()
 public class UserController {
 
 	@Autowired
@@ -35,6 +38,7 @@ public class UserController {
 	/**
 	 * 用户列表
 	 */
+	@RequiresPermissions("userManage")
 	@RequestMapping("listUser")
 	public String list(Model model, @RequestParam(name = "page", required = true, defaultValue = "1") int page, @RequestParam(name = "size", required = true, defaultValue = "4") int size) {
 		List<User> listUser1 = userService.listUser(page, size);
@@ -69,15 +73,14 @@ public class UserController {
 		user.setPassword(encodedPassword);
 		user.setSalt(salt);
 		userService.addUser(user);
-		// 修改 用户角色 表
-		userRoleService.editUserRole(user, roleIds);
+
 		return "redirect:listUser";
 	}
 
+	@RequiresPermissions("addUser1")
 	@RequestMapping("addUser1")
-	public String add1(Model model) {
-		List<Role> listRole = roleService.selectlistRole();
-		model.addAttribute("listRole", listRole);
+	public String add1() {
+
 
 		return "addUser";
 	}
@@ -85,6 +88,7 @@ public class UserController {
 	/**
 	 * 更改用户，页面
 	 */
+	@RequiresPermissions("editUser")
 	@RequestMapping("editUser")
 	public String edit(Model model, long id) {
 		List<Role> listRole = roleService.selectlistRole();
@@ -130,9 +134,23 @@ public class UserController {
 	/**
 	 * 删除用户
 	 */
+	@RequiresPermissions("deleteUser")
 	@RequestMapping("deleteUser")
 	public String delete(long id) {
 		userService.deleteUser(id);
 		return "redirect:listUser";
 	}
+
+    @RequestMapping("editPassword")
+    public String edit(Model model,String name) {
+        List<Role> listRole = roleService.selectlistRole();
+        model.addAttribute("listRole", listRole);
+        User user = userService.editPassword(name);
+        model.addAttribute("user", user);
+
+        List<Role> roles = roleService.listRoleByUser(user);
+        model.addAttribute("currentRoles", roles);
+
+        return "editUser";
+    }
 }

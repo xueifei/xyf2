@@ -39,7 +39,9 @@
 						<!-- Menu Footer-->
 						<li class="user-footer">
 							<div class="pull-left">
-								<a href="${pageContext.request.contextPath}/admin/editPassword" class="btn btn-default btn-flat">修改密码</a>
+								<shiro:authenticated>
+									<a href="#" class="btn btn-default btn-flat">修改密码</a>
+								</shiro:authenticated>
 							</div>
 							<div class="pull-right">
 								<a href="${pageContext.request.contextPath}/doLogout"

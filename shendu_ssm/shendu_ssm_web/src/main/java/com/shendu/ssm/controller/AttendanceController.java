@@ -6,6 +6,7 @@ import com.shendu.ssm.domain.Attendance;
 import com.shendu.ssm.domain.Note;
 import com.shendu.ssm.service.AttendanceService;
 import com.shendu.ssm.service.NoteService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
@@ -45,7 +46,7 @@ public class AttendanceController {
         return modelAndView;
     }
 
-    //
+    @RequiresPermissions("excelUpload")
     @RequestMapping(value="/upload1")
     public String upload1() throws UnsupportedEncodingException {
 
@@ -58,6 +59,7 @@ public class AttendanceController {
         return "attendance";
     }
 
+    @RequiresPermissions("attDetail")
     @RequestMapping(value="/findByCreateDate")
     public ModelAndView findByCreateDate(@RequestParam(name = "page", required = true, defaultValue = "1") int page, @RequestParam(name = "size",
             required = true, defaultValue = "4") int size) throws ParseException {
@@ -72,6 +74,7 @@ public class AttendanceController {
     }
 
     //批量发短信
+    @RequiresPermissions("messageSend")
     @RequestMapping(value = "/messageSend")
     public ModelAndView MessageSend() throws ParseException {
         ModelAndView modelAndView = new ModelAndView();
@@ -96,7 +99,8 @@ public class AttendanceController {
 //        model.addAttribute("mess",isTrue?"修改成功":"修改失败");
 //        return "redirect:findAll";
 //    }
-    @RequestMapping("updateAtt")
+@RequiresPermissions("updateAtt")
+@RequestMapping("updateAtt")
     public String updateAtt(Model model, Integer id) {
         Attendance attendance = attendanceService.findById(id);
         model.addAttribute("attendance", attendance);
@@ -110,7 +114,7 @@ public class AttendanceController {
         model.addAttribute("mess",isTrue?"修改成功":"修改失败");
         return "redirect:findByCreateDate";
     }
-
+    @RequiresPermissions("deleteAtt")
     @RequestMapping("/deleteAtt")
     public String deleteAtt(Integer id, Model model){
         boolean isTrue = attendanceService.deleteAtt(id);

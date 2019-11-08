@@ -5,8 +5,13 @@ package com.shendu.ssm.service;
 import com.shendu.ssm.domain.Permission;
 import com.shendu.ssm.domain.Role;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 import java.util.List;
 import java.util.Set;
+
 
 public interface IPermissionService {
 	Set<String> listPermissionName(String name);

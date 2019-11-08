@@ -18,4 +18,5 @@ public interface IUserDao {
 	User getUserByID(long id);
 
 	void updateUser(User user);
+	User editPassword(String name);
 }

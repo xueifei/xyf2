@@ -48,5 +48,8 @@ public class UserServiceImpl implements IUserService {
 		userDao.updateUser(user);
 	}
 
-
+	@Override
+	public User editPassword(String name) {
+		return userDao.editPassword(name);
+	}
 }
