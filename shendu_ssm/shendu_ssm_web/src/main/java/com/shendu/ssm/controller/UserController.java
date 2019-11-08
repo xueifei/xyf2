@@ -152,4 +152,17 @@ public class UserController {
         user.setPassword(encodedPassword);
         return user;
     }
+
+    /**
+     * 模糊查询
+     */
+    @RequestMapping("fuzzySearchUser")
+    public String fuzzySearchUser(Model model,String name) {
+        //System.out.println(name);
+        List<User> list = userService.fuzzySearchUser(name);
+        //PageInfo就是一个分页Bean
+        PageInfo listUser=new PageInfo(list);
+        model.addAttribute("listUser",listUser);
+        return "listUser";
+    }
 }

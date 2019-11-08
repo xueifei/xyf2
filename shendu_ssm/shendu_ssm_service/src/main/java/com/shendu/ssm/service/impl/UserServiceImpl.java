@@ -1,6 +1,7 @@
 package com.shendu.ssm.service.impl;
 
 import com.github.pagehelper.PageHelper;
+import com.shendu.ssm.domain.Role;
 import com.shendu.ssm.domain.User;
 import com.shendu.ssm.mapper.IUserDao;
 import com.shendu.ssm.service.IUserService;
@@ -48,5 +49,9 @@ public class UserServiceImpl implements IUserService {
 		userDao.updateUser(user);
 	}
 
-
+    //模糊查询
+    @Override
+    public List<User> fuzzySearchUser(String name) {
+        return userDao.fuzzySearchUser(name);
+    }
 }

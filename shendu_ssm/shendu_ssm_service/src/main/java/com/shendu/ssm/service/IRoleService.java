@@ -24,4 +24,6 @@ public interface IRoleService{
 	void updateRole(Role role);
 
 	void deleteRoleByID(long id);
+
+    List<Role> fuzzyRole(String name);
 }

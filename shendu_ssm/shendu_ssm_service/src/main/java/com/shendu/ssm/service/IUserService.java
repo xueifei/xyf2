@@ -13,4 +13,8 @@ public interface IUserService {
 	void deleteUser(long id);
 	User getUserByID(long id);
 	void updateUser(User user);
+
+    //模糊查询
+    List<User> fuzzySearchUser(String name);
+
 }

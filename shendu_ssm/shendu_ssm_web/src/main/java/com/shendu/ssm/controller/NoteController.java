@@ -28,5 +28,13 @@ public class NoteController {
         boolean isTrue = noteService.deleteNote(id);
         model.addAttribute("mess",isTrue?"删除成功":"删除失败");
         return "redirect:findAll";
-}
+    }
+
+    @RequestMapping("fuzzyNote")
+    public String fuzzyNote(String name,Model model){
+        List<Note> list = noteService.fuzzyNote(name);
+        PageInfo rs = new PageInfo(list);
+        model.addAttribute("rs",rs);
+        return "listNote";
+    }
 }

@@ -86,4 +86,17 @@ public class StudentDetailController {
         mav.setViewName("");
         return mav;
     }*/
+
+    /**
+     * 模糊查询
+     */
+    @RequestMapping("fuzzyStu")
+    public String fuzzyStu(Model model,String name) {
+        System.out.println(name);
+        List<StudentDetail> list = studentDetailService.fuzzyStu(name);
+        //PageInfo就是一个分页Bean
+        PageInfo listStu = new PageInfo(list);
+        model.addAttribute("listStu",listStu);
+        return "listStudent";
+    }
 }
