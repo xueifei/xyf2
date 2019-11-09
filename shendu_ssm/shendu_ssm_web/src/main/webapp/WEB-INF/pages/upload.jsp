@@ -144,7 +144,7 @@
 										</div>
 										<div class="col-md-2 title">下载学生信息Excel文件</div>
 										<div class="col-md-4 data">
-											<button type="button"  class="form-control" onclick="location.href='${pageContext.request.contextPath}/static/学生详情模板.xlsx'">点击下载考勤模板</button>
+											<button type="button"  class="form-control" onclick="location.href='${pageContext.request.contextPath}/static/学生详情模板.xlsx'">点击下载学生模板</button>
 										</div>
 
 
