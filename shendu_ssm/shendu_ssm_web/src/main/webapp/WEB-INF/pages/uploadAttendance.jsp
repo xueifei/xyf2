@@ -136,7 +136,7 @@
 											<td>${as.name }</td>
 											<td><fmt:formatDate value="${as.attendanceDate}" pattern="yyyy-MM-dd HH:mm"/></td>
 											<td>${as.statusStr}</td>
-											<td>${as.student.stuClass}</td>
+											<td>${as.stuClass}</td>
 											<td><fmt:formatDate value="${as.createDate}" pattern="yyyy-MM-dd HH:mm"/></td>
 
 										</tr>

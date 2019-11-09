@@ -33,6 +33,7 @@
                 /css/**=anon
                 /img/**=anon
                 /js/**=anon
+                /static/**=anon
                 /plugins/**=anon
                 <!-- 权限配置，只允许 admin 访问 -->
                 <!--/admin/**=roles[admin]-->

@@ -1,8 +1,10 @@
 package com.shendu.ssm.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.shendu.ssm.domain.Permission;
 import com.shendu.ssm.domain.Role;
 import com.shendu.ssm.domain.User;
+import com.shendu.ssm.service.IPermissionService;
 import com.shendu.ssm.service.IRoleService;
 import com.shendu.ssm.service.IUserRoleService;
 import com.shendu.ssm.service.IUserService;
@@ -16,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +30,6 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("admin")
-//@RequiresUser()
 public class UserController {
 
 	@Autowired
@@ -35,6 +38,8 @@ public class UserController {
 	IUserService userService;
 	@Autowired
 	IRoleService roleService;
+	@Autowired
+	IPermissionService permissionService;
 
 	/**
 	 * 用户列表
@@ -159,6 +164,29 @@ public class UserController {
         user.setPassword(encodedPassword);
         return user;
     }
+
+	/**
+	 *查询用户查询
+	 */
+	@RequestMapping("showUser")
+	@ResponseBody
+	public ModelAndView showUser(long id) {
+		User userByID = userService.getUserByID(id);
+		List<Role> roles = roleService.listRoleByUser(userByID);
+
+		for (Role role : roles) {
+			List<Permission> permissionListByRole = permissionService.getPermissionListByRole(role);
+            for (Permission permission : permissionListByRole) {
+                permissionService.createPermissionTreeList(permission,permissionListByRole);
+            }
+			role.setPermissions(permissionListByRole);
+		}
+		userByID.setRoles(roles);
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("user",userByID);
+		modelAndView.setViewName("showUser");
+		return modelAndView;
+	}
 
     /**
      * 模糊查询

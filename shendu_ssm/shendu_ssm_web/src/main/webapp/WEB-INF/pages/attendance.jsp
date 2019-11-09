@@ -3,6 +3,7 @@
 		 pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -106,7 +107,7 @@
 							<div class="pull-left">
 								<div class="form-group form-inline">
 									<div class="btn-group">
-										<button type="button" class="btn btn-default" title="新建" onclick="location.href='/student'">
+										<button type="button" class="btn btn-default" title="新建" onclick="location.href='#'">
 											<i class="fa fa-file-o"></i> 新建
 										</button>
 										
@@ -128,7 +129,8 @@
                                 </div>
                             </form>
 							<!--工具栏/-->
-
+							<form action="${pageContext.request.contextPath}/attendance/messageSend"
+								  method="post">
 							<!--数据列表-->
 							<table id="dataList"
 								class="table table-bordered table-striped table-hover dataTable">
@@ -147,10 +149,9 @@
 									</tr>
 								</thead>
 								<tbody>
-
 									<c:forEach items="${attendanceList.list}" var="as">
 										<tr>
-											<td><input name="ids" type="checkbox"></td>
+											<td><input name="ids" type="checkbox" value="${as.id}"></td>
 											<td>${as.id }</td>
 											<td>${as.name }</td>
 											<td><fmt:formatDate value="${as.attendanceDate}" pattern="yyyy-MM-dd HH:mm"/></td>
@@ -184,10 +185,11 @@
 					<!-- /.box-body -->
 					<!-- 批量发短信 -->
 					<div class="btn-group" >
-						<button type="button" class="btn btn-default"  title="批量发送短信" onclick="location.href='${pageContext.request.contextPath}/attendance/messageSend'">
-							<i class="fa fa-file-o"></i> 一键批量发送短信
+						<button type="submit" class="btn btn-default"  title="批量发送短信" >
+							<i class="fa fa-file-o"></i> 勾选学生一键批量发送短信
 						</button>
 					</div>
+				</form>
 					<!-- .box-footer-->
 					<div class="box-footer">
 						<div class="pull-left">

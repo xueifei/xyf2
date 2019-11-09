@@ -6,7 +6,7 @@
         values (#{phone},#{name},#{status},#{template_id})
     </insert>
     <select id="findAll" resultType="com.shendu.ssm.domain.Note">
-        select * from note
+        select * from note order by id desc
     </select>
     <select id="findList" resultType="com.shendu.ssm.domain.Note">
         select * from note where id = #{id}

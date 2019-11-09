@@ -1,7 +1,6 @@
 package com.shendu.ssm.utils;
 
 import java.io.*;
-import org.aspectj.weaver.ast.Var;
 
 
 import java.net.HttpURLConnection;
@@ -14,16 +13,20 @@ import java.util.Set;
 public class MessageXsendUtils {
     public static String your_appid;//appid 必需 在SUBMAIL应用集成中创建的短信应用ID
     public static String your_appkey;//密码
-    public static String project_id;//项目标记的ID
+    public static String project_id1;//项目标记的ID
+    public static String project_id2;//项目标记的ID
+    public static String project_id3;//项目标记的ID
     static {
 
         try {
-            InputStream in = MessageXsendUtils.class.getClassLoader().getResourceAsStream("com/shendu/ssm/utils/const.properties");
+            InputStream in = MessageXsendUtils.class.getClassLoader().getResourceAsStream("const.properties");
             Properties prop = new Properties();
             prop.load(in);
             your_appid = prop.getProperty("messiage_appid");
             your_appkey = (String) prop.get("messiage_appkey");
-            project_id = (String) prop.get("messiage_project_id");
+            project_id1 = (String) prop.get("messiage_project_id1");
+            project_id2 = (String) prop.get("messiage_project_id2");
+            project_id3 = (String) prop.get("messiage_project_id3");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -41,6 +44,7 @@ public class MessageXsendUtils {
         return executePostByUsual(URL, paramer);
 
     }
+
 
     public static String executePostByUsual(String actionURL, HashMap<String, String> parameters) {
         String response = "";
@@ -102,17 +106,40 @@ public class MessageXsendUtils {
         // Integer getrandom = impl.getrandom();
         // getmessige("15034358109", 888888);
         //getmessige("13303475875", 888888);
-       getmessige("13718962979", "111");
-    }
+       //getmessige("18600571419", "111");
+        String code = "{\"current_date\":\"2019-11-08\",\"current_time\":\"10:51\"}";
+        getmessige3("18600571419", code);
 
-    public static String  getmessige(String tel, String code) {
+    }
+    //迟到短信
+    public static String  getmessige1(String tel, String code) {
         // String response = MessageXsendDemo.xsend("29469",
         // "78452dce814b760875873e45ad07bb8c", tel, "`",
         // "{\"code\":\""+code+"\",\"time\":\"10\"}");
-        String response = MessageXsendUtils.xsend(your_appid, your_appkey, tel, project_id,
+        String response = MessageXsendUtils.xsend(your_appid, your_appkey, tel, project_id1,
                   code );
 
         return response;
 
     }
+    //学院旷课短信
+    public static String  getmessige2(String tel, String code) {
+
+        String response = MessageXsendUtils.xsend(your_appid, your_appkey, tel, project_id2,
+                code );
+
+        return response;
+
+    }
+    //旷课短信
+    public static String  getmessige3(String tel, String code) {
+
+        String response = MessageXsendUtils.xsend(your_appid, your_appkey, tel, project_id3,
+                code );
+
+        return response;
+
+    }
+
+
 }

@@ -141,7 +141,7 @@ public class PermissionServiceImpl implements IPermissionService {
 		return resultList;
 	}
 
-	private void createPermissionTreeList(Permission permission,List<Permission> list){
+	public void createPermissionTreeList(Permission permission,List<Permission> list){
 		Set<Permission> resultSet = new HashSet<>();
 		for(Permission p:list){
 			if(p.getParent()!=null&&p.getParent().equals(permission)){

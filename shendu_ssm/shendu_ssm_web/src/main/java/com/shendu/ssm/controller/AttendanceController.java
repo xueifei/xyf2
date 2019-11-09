@@ -6,9 +6,11 @@ import com.shendu.ssm.domain.Attendance;
 import com.shendu.ssm.domain.Note;
 import com.shendu.ssm.service.AttendanceService;
 import com.shendu.ssm.service.NoteService;
+import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -35,11 +37,10 @@ public class AttendanceController {
     @RequestMapping(value="/upload",method = RequestMethod.POST)
     public ModelAndView upload(@RequestParam(value="file",required = false) MultipartFile file, HttpServletRequest request, HttpServletResponse response,@RequestParam(name = "page", required = true, defaultValue = "1") int page, @RequestParam(name = "size", required = true, defaultValue = "4") int size) throws UnsupportedEncodingException {
         ModelAndView modelAndView = new ModelAndView();
-        List<Attendance> ttendances = attendanceService.readExcelFile(file);
-        int i = attendanceService.insertInfoBatch(ttendances);
-        List<Attendance> attendances12 = attendanceService.findStuClassByList( ttendances);
+        List<Attendance> attendances = attendanceService.readExcelFile(file);
+        int i = attendanceService.insertInfoBatch(attendances);
         //PageInfo就是一个分页Bean
-        PageInfo attendances1=new PageInfo(attendances12);
+        PageInfo attendances1=new PageInfo(attendances);
         modelAndView.addObject("attendanceList",attendances1);
         modelAndView.addObject("result",i>0?"上传成功":"上传失败");
         modelAndView.setViewName("uploadAttendance");
@@ -75,11 +76,14 @@ public class AttendanceController {
 
     //批量发短信
     @RequiresPermissions("messageSend")
-    @RequestMapping(value = "/messageSend")
-    public ModelAndView MessageSend() throws ParseException {
+    @RequestMapping(value = "/messageSend",method = {RequestMethod.POST})
+    public ModelAndView MessageSend(@RequestParam("ids") String[] ids) throws ParseException {
         ModelAndView modelAndView = new ModelAndView();
-        List<Attendance> byCreateDate = attendanceService.findByCreateDate();
-        List<Note> notes = attendanceService.MessageSend(byCreateDate);
+        //List<Attendance> byCreateDate = attendanceService.findByCreateDate();
+        Integer[] ids1 = (Integer[]) ConvertUtils.convert(ids, Integer.class);
+        List<Attendance> byIds = attendanceService.findByIds(ids1);
+        System.out.println(byIds);
+        List<Note> notes = attendanceService.MessageSend(byIds);
             if(notes != null){
             int i = noteService.insertBatch(notes);
         }

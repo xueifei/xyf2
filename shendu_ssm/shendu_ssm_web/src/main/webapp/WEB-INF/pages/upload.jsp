@@ -98,27 +98,30 @@
 					<div class="box-body">
 
 						<!-- 数据表格 -->
-						<form action="${pageContext.request.contextPath}/attendance/upload" enctype="multipart/form-data" id="makes"
+						<form action="${pageContext.request.contextPath}/attendance/upload" enctype="multipart/form-data" id="makes" onsubmit="return importExc()"
 							  method="post">
 							<!-- 正文区域 -->
 							<section class="content"> <!--产品信息-->
 
 								<div class="panel panel-default">
-									<div class="panel-heading">选择文件</div>
+									<div class="panel-heading">考勤信息上传</div>
 									<div class="row data-type">
 
-										<div class="col-md-2 title">请选择Excel文件</div>
+										<div class="col-md-2 title">请选择考勤Excel文件</div>
 										<div class="col-md-4 data">
 											<input type="file" id="excelFile" name="file" class="form-control">
 										</div>
-
+										<div class="col-md-2 title">下载考勤模板Excel文件</div>
+										<div class="col-md-4 data">
+											<button type="button"  class="form-control" onclick="location.href='${pageContext.request.contextPath}/static/考勤模板.xlsx'">点击下载考勤模板</button>
+										</div>
 
 
 									</div>
 								</div>
 								<!--订单信息/--> <!--工具栏-->
 								<div class="box-tools text-center">
-									<button type="submit" class="btn bg-maroon" οnclick="importExc()">上传</button>
+									<button type="submit" class="btn bg-maroon" >上传</button>
 									<button type="button" class="btn bg-default"
 											onclick="history.back(-1);">返回</button>
 								</div>
@@ -126,6 +129,36 @@
 							<!-- 正文区域 /-->
 						</form>
 							<!--数据列表/-->
+						<form action="${pageContext.request.contextPath}/student/upload" enctype="multipart/form-data" onsubmit="return importExc1()"
+							  method="post">
+							<!-- 正文区域 -->
+							<section class="content"> <!--产品信息-->
+
+								<div class="panel panel-default">
+									<div class="panel-heading">学生信息上传</div>
+									<div class="row data-type">
+
+										<div class="col-md-2 title">请选择学生Excel文件</div>
+										<div class="col-md-4 data">
+											<input type="file" id="excelFile1" name="file" class="form-control">
+										</div>
+										<div class="col-md-2 title">下载学生信息Excel文件</div>
+										<div class="col-md-4 data">
+											<button type="button"  class="form-control" onclick="location.href='${pageContext.request.contextPath}/static/学生详情模板.xlsx'">点击下载学生模板</button>
+										</div>
+
+
+									</div>
+								</div>
+								<!--订单信息/--> <!--工具栏-->
+								<div class="box-tools text-center">
+									<button type="submit" class="btn bg-maroon" >上传</button>
+									<button type="button" class="btn bg-default"
+											onclick="history.back(-1);">返回</button>
+								</div>
+								<!--工具栏/--> </section>
+							<!-- 正文区域 /-->
+						</form>
 
 					</div>
 						<!-- 数据表格 /-->
@@ -210,19 +243,38 @@
 				var formData = new FormData();
 				//检验导入的文件是否为Excel文件
 				var uploadFile = document.getElementById("excelFile").value;
-				formData.append("excelFile",$("#excelFile")[0].files[0]);
-				formData.append("name",uploadFile);
-				if(uploadFile == null || uploadFile == ''){
-					layer.msg("请选择要上传的Excel文件");
+				formData.append("excelFile", $("#excelFile")[0].files[0]);
+				formData.append("name", uploadFile);
+				if (uploadFile == null || uploadFile == '') {
+					alert("请选择要上传的Excel文件");
 					return false;
-				}else{
+				} else {
 					var fileExtend = uploadFile.substring(uploadFile.lastIndexOf('.')).toLowerCase();
-					if(fileExtend == '.xls'){
-					}else{
-						layer.msg("文件格式需为'.xls'格式");
+					if (fileExtend == '.xls' || fileExtend == '.xlsx') {
+					} else {
+						alert("文件格式需为excel格式");
 						return false;
 					}
 				}
+			}
+			function importExc1() {
+				var formData = new FormData();
+				//检验导入的文件是否为Excel文件
+				var uploadFile = document.getElementById("excelFile1").value;
+				formData.append("excelFile", $("#excelFile1")[0].files[0]);
+				formData.append("name", uploadFile);
+				if (uploadFile == null || uploadFile == '') {
+					alert("请选择要上传的Excel文件");
+					return false;
+				} else {
+					var fileExtend = uploadFile.substring(uploadFile.lastIndexOf('.')).toLowerCase();
+					if (fileExtend == '.xls' || fileExtend == '.xlsx') {
+					} else {
+						alert("文件格式需为excel格式");
+						return false;
+					}
+				}
+			}
 			$(document).ready(function() {
 				// 选择框
 				$(".select2").select2();

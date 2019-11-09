@@ -3,13 +3,16 @@ package com.shendu.ssm.controller;
 import com.github.pagehelper.PageInfo;
 import com.shendu.ssm.domain.StudentDetail;
 import com.shendu.ssm.service.StudentDetailService;
+import com.shendu.ssm.utils.StudentReadExcel;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -79,17 +82,22 @@ public class StudentDetailController {
 
         return "editStudent";
     }
+    /**
+     * 上传学生Excel表
+     */
+    @Transactional
+    @RequestMapping(value = "upload",method = RequestMethod.POST)
+    public String upload(Model model, @RequestParam(value="file",required = false) MultipartFile file) {
 
-    /*@RequestMapping("/findById")
-    public ModelAndView findById(Integer id,Model model){
-        System.out.println("查询学生信息");
-        StudentDetail studentDetail = studentDetailService.findById(id);
-        System.out.println(studentDetail);
-        ModelAndView mav = new ModelAndView();
-        mav.addObject("studentDetail",studentDetail);
-        mav.setViewName("");
-        return mav;
-    }*/
+        List<StudentDetail> excelInfo = StudentReadExcel.getExcelInfo(file);
+        for (StudentDetail studentDetail : excelInfo) {
+            studentDetailService.addStu(studentDetail);
+        }
+
+        return "redirect:findAll";
+    }
+
+
 
     /**
      * 模糊查询
