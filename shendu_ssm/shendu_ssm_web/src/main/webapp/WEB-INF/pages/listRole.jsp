@@ -118,13 +118,17 @@
 									</div>
 								</div>
 							</div>
-							<div class="box-tools pull-right">
-								<div class="has-feedback">
-									<input type="text" class="form-control input-sm"
-										placeholder="搜索"> <span
-										class="glyphicon glyphicon-search form-control-feedback"></span>
-								</div>
-							</div>
+                            <form action="${pageContext.request.contextPath}/admin/fuzzyRole"method="post">
+                                <div class="box-tools pull-right">
+                                    <div class="input-group input-group-sm" style="width: 150px;">
+                                        <input type="text" name="name" class="form-control pull-right" placeholder="根据姓名查询">
+
+                                        <div class="input-group-btn">
+                                            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
 							<!--工具栏/-->
 
 							<!--数据列表-->
@@ -138,7 +142,7 @@
 										<th class="sorting_asc">ID</th>
 										<th class="sorting_desc">角色名称</th>
 										<th class="sorting_desc">角色描述</th>
-										<th class="sorting_asc sorting_asc_disabled">权限</th>
+										<%--<th class="sorting_asc sorting_asc_disabled">权限</th>--%>
 										<th class="text-center">操作</th>
 									</tr>
 								</thead>
@@ -150,14 +154,15 @@
 											<td>${r.id }</td>
 											<td>${r.name }</td>
 											<td>${r.desc}</td>
-											<td>
-												<c:forEach items="${role_permissions[r]}" var="p">
-													${p.name} <br>
-												</c:forEach>
-											</td>
+											<%--<td>--%>
+												<%--<c:forEach items="${role_permissions[r]}" var="p">--%>
+													<%--${p.name} <br>--%>
+												<%--</c:forEach>--%>
+											<%--</td>--%>
 											<td class="text-center">
-												<a href="editRole?id=${r.id}" class="btn bg-olive btn-xs">编辑</a>
+												<a href="editRole?id=${r.id}" class="btn bg-olive btn-xs">修改</a>
 												<a href="deleteRole?id=${r.id}" class="btn bg-olive btn-xs">删除角色</a>
+												<a href="xiang?id=${r.id}" class="btn bg-olive btn-xs">详情</a>
 											</td>
 										</tr>
 									</c:forEach>

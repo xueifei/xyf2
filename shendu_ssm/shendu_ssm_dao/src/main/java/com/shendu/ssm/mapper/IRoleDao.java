@@ -3,6 +3,7 @@ package com.shendu.ssm.mapper;
 
 
 import com.shendu.ssm.domain.Role;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -16,4 +17,7 @@ public interface IRoleDao {
 	void updateRole(Role role);
 
 	void deleteRoleByID(long id);
+
+    List<Role> fuzzyRole(@Param("name")String name);
+
 }

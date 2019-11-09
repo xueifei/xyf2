@@ -102,4 +102,9 @@ public class RoleServiceImpl implements IRoleService {
 		roleDao.deleteRoleByID(id);
 	}
 
+
+    @Override
+    public List<Role> fuzzyRole(String name) {
+        return roleDao.fuzzyRole(name);
+    }
 }

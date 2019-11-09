@@ -15,4 +15,6 @@ public interface StudentDetailDao {
     void updateStuClassBatch(@Param("stuClass") String stuClass,@Param("list") Integer[] ids);
 
     List<StudentDetail> findByName(String name);
+
+    List<StudentDetail> fuzzyStu(@Param("name")String name);
 }

@@ -110,6 +110,7 @@
 							<input type="text" class="form-control" name="desc"
 								   placeholder="角色描述" value="${role.desc}">
 						</div>
+						<div class="col-md-2 title" style="width: 100%">拥有权限</div>
 						<c:forEach items="${ps}" var="p">
 							<c:set var="hasPermission" value="false"/>
 							<c:forEach items="${currentPermissions}" var="currentPermission">
@@ -117,19 +118,16 @@
 									<c:set var="hasPermission" value="true"/>
 								</c:if>
 							</c:forEach>
-							<div class="col-md-2 title">配置权限</div>
 							<div class="col-md-4 data">
 								<input type="checkbox"  ${hasPermission?"checked='checked'":"" } name="permissionIds"
 									   value="${p.id}"> ${p.name}
 							</div>
 						</c:forEach>
-
 					</div>
 				</div>
 				<input type="hidden" name="id" value="${role.id}">
 				<!--订单信息/--> <!--工具栏-->
 				<div class="box-tools text-center">
-					<button type="submit" class="btn bg-maroon">保存</button>
 					<button type="button" class="btn bg-default"
 							onclick="history.back(-1);">返回</button>
 				</div>

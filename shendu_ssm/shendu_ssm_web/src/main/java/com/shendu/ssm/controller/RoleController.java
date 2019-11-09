@@ -7,6 +7,9 @@ import com.shendu.ssm.domain.User;
 import com.shendu.ssm.service.IPermissionService;
 import com.shendu.ssm.service.IRolePermissionService;
 import com.shendu.ssm.service.IRoleService;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +25,8 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("admin")
+//@RequiresRoles("admin")
+//@RequiresRoles(value = {"admin","user"},logical = Logical.OR)
 public class RoleController {
 
 	@Autowired
@@ -31,6 +36,7 @@ public class RoleController {
 	@Autowired
 	IPermissionService permissionService;
 
+	@RequiresPermissions("roleManage")
 	@RequestMapping("listRole")
 	public String list(Model model, @RequestParam(name = "page", required = true, defaultValue = "1") int page, @RequestParam(name = "size", required = true, defaultValue = "4") int size) {
 		List<Role> rs1 = roleService.listRole(page, size);
@@ -57,6 +63,7 @@ public class RoleController {
 		return "redirect:listRole";
 	}
 
+	@RequiresPermissions("addRole1")
 	@RequestMapping("addRole1")
 	public String addRole1(Model model) {
 		List<Permission> ps = permissionService.getPermissionList();
@@ -64,6 +71,7 @@ public class RoleController {
 		return "addRole";
 	}
 
+	@RequiresPermissions("editRole")
 	@RequestMapping("editRole")
 	public String list(Model model, long id) {
 		Role role = roleService.getRole(id);
@@ -85,10 +93,34 @@ public class RoleController {
 		return "redirect:listRole";
 	}
 
+	@RequiresPermissions("deleteRole")
 	@RequestMapping("deleteRole")
 	public String delete(long id) {
 		roleService.deleteRoleByID(id);
 		return "redirect:listRole";
 	}
+
+	@RequiresPermissions("xiang")
+	@RequestMapping("xiang")
+	public String listl(Model model, long id) {
+		Role role = roleService.getRole(id);
+		model.addAttribute("role", role);
+
+		List<Permission> ps = permissionService.getPermissionList();
+		model.addAttribute("ps", ps);
+
+		List<Permission> currentPermissions = permissionService.getPermissionListByRole(role);
+		model.addAttribute("currentPermissions", currentPermissions);
+
+		return "xiang";
+	}
+    @RequestMapping("fuzzyRole")
+    public String fuzzyRole(String name,Model model){
+        List<Role> list = roleService.fuzzyRole(name);
+        PageInfo rs = new PageInfo(list);
+        model.addAttribute("rs",rs);
+        return "listRole";
+    }
+
 
 }

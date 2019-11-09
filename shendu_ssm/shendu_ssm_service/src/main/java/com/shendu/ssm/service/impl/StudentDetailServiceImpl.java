@@ -73,4 +73,11 @@ public class StudentDetailServiceImpl implements StudentDetailService {
         }
         return false;
     }
+
+    //模糊查询
+    @Override
+    public List<StudentDetail> fuzzyStu(String name) {
+        return studentDetailDao.fuzzyStu(name);
+    }
+
 }

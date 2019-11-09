@@ -28,4 +28,17 @@
             #{id,jdbcType=INTEGER}
         </foreach>
     </update>
+
+    <!--模糊查询-->
+    <select id="fuzzyStu" resultType="StudentDetail" parameterType="java.lang.String">
+        select * from student_detail
+        <where>
+            <if test="name!=null and name!=''"> name like concat('%',#{name},'%')</if>
+
+            <if test="name!=null and name!=''">or address like concat('%',#{name},'%')</if>
+            <if test="name!=null and name!=''">or stu_class like concat('%',#{name},'%')</if>
+
+            <!--<if test="username!=null and username!=''">or  userpwd like concat('%',#{username},'%')</if>-->
+        </where>
+    </select>
 </mapper>

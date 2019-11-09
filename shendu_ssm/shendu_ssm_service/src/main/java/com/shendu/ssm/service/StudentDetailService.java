@@ -12,4 +12,8 @@ public interface StudentDetailService {
     public StudentDetail findById(Integer id);
 
     boolean updateStuClassBatch( String stuClass,String[] ids);
+
+
+    //模糊查询
+    List <StudentDetail> fuzzyStu(String name);
 }

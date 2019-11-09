@@ -25,4 +25,19 @@
             ( #{item.phone,jdbcType=VARCHAR}, #{item.name,jdbcType=VARCHAR},#{item.status,jdbcType=INTEGER},#{item.templateId,jdbcType=INTEGER})
         </foreach>
     </insert>
+
+    <!--模糊查询-->
+    <select id="fuzzyNote" resultType="Note" parameterType="java.lang.String">
+        select * from note
+        <where>
+            <if test="name!=null and name!=''"> name like concat('%',#{name},'%')</if>
+
+            <if test="name!=null and name!=''">or status like concat('%',#{name},'%')</if>
+
+            <if test="name!=null and name!=''">or template_id like concat('%',#{name},'%')</if>
+
+            <!--<if test="username!=null and username!=''">or  userpwd like concat('%',#{username},'%')</if>-->
+        </where>
+    </select>
+
 </mapper>

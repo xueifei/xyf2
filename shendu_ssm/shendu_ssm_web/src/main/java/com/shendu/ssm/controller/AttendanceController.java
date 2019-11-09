@@ -7,6 +7,7 @@ import com.shendu.ssm.domain.Note;
 import com.shendu.ssm.service.AttendanceService;
 import com.shendu.ssm.service.NoteService;
 import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpMethod;
@@ -46,7 +47,7 @@ public class AttendanceController {
         return modelAndView;
     }
 
-    //
+    @RequiresPermissions("excelUpload")
     @RequestMapping(value="/upload1")
     public String upload1() throws UnsupportedEncodingException {
 
@@ -59,6 +60,7 @@ public class AttendanceController {
         return "attendance";
     }
 
+    @RequiresPermissions("attDetail")
     @RequestMapping(value="/findByCreateDate")
     public ModelAndView findByCreateDate(@RequestParam(name = "page", required = true, defaultValue = "1") int page, @RequestParam(name = "size",
             required = true, defaultValue = "4") int size) throws ParseException {
@@ -73,6 +75,7 @@ public class AttendanceController {
     }
 
     //批量发短信
+    @RequiresPermissions("messageSend")
     @RequestMapping(value = "/messageSend",method = {RequestMethod.POST})
     public ModelAndView MessageSend(@RequestParam("ids") String[] ids) throws ParseException {
         ModelAndView modelAndView = new ModelAndView();
@@ -80,10 +83,10 @@ public class AttendanceController {
         Integer[] ids1 = (Integer[]) ConvertUtils.convert(ids, Integer.class);
         List<Attendance> byIds = attendanceService.findByIds(ids1);
         System.out.println(byIds);
-        /*List<Note> notes = attendanceService.MessageSend(byIds);
+        List<Note> notes = attendanceService.MessageSend(byIds);
             if(notes != null){
             int i = noteService.insertBatch(notes);
-        }*/
+        }
 
 
         List<Note> all = noteService.findAll(1, 5);
@@ -100,7 +103,8 @@ public class AttendanceController {
 //        model.addAttribute("mess",isTrue?"修改成功":"修改失败");
 //        return "redirect:findAll";
 //    }
-    @RequestMapping("updateAtt")
+@RequiresPermissions("updateAtt")
+@RequestMapping("updateAtt")
     public String updateAtt(Model model, Integer id) {
         Attendance attendance = attendanceService.findById(id);
         model.addAttribute("attendance", attendance);
@@ -114,11 +118,24 @@ public class AttendanceController {
         model.addAttribute("mess",isTrue?"修改成功":"修改失败");
         return "redirect:findByCreateDate";
     }
-
+    @RequiresPermissions("deleteAtt")
     @RequestMapping("/deleteAtt")
     public String deleteAtt(Integer id, Model model){
         boolean isTrue = attendanceService.deleteAtt(id);
         model.addAttribute("mess",isTrue?"删除成功":"删除失败");
         return "redirect:findByCreateDate";
+    }
+
+    /**
+     * 模糊查询xxxxx
+     */
+    @RequestMapping("fuzzyAtt")
+    public String fuzzyAtt(Model model,String name) {
+        //System.out.println(name);
+        List<Attendance> list = attendanceService.fuzzyAtt(name);
+        //PageInfo就是一个分页Bean
+        PageInfo listAtt = new PageInfo(list);
+        model.addAttribute("attendanceList",listAtt);
+        return "attendance";
     }
 }

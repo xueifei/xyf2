@@ -36,7 +36,7 @@
                 /static/**=anon
                 /plugins/**=anon
                 <!-- 权限配置，只允许 admin 访问 -->
-                /admin/**=roles[admin]
+                <!--/admin/**=roles[admin]-->
                 /attendance/upload/**=roles[admin]
                 /doLogout=logout
                 <!-- 所有的请求(除去配置的静态资源请求或请求地址为 anon 的请求)都要通过过滤器url -->

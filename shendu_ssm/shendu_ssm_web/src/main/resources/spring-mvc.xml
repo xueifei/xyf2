@@ -49,6 +49,7 @@
         cglib代理，生成子类对象，proxy-target-class="true" 默认使用cglib的方式
     -->
     <aop:aspectj-autoproxy proxy-target-class="true"/>
+    <aop:config proxy-target-class="true"/>
     <!-- SpringMVC上传文件时，需要配置MultipartResolver处理器 -->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="defaultEncoding" value="utf-8" />
