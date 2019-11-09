@@ -18,7 +18,7 @@ public interface AttendanceService {
     int insertInfoBatch(List<Attendance> attendanceList);
 
     //根据list集合中的sId 获取班级信息
-    List<Attendance> findStuClassByList(List<Attendance> attendances);
+    //List<Attendance> findStuClassByList(List<Attendance> attendances);
 
     List<Attendance> findByCreateDate(int page, int size) throws ParseException;
 

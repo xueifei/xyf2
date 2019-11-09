@@ -203,7 +203,7 @@
                                 <td>${role.desc }</td>
                             </tr>
                             <c:forEach items="${role.permissions}" var="permission" varStatus="vs2">
-                                <c:if test="${!empty permission.parent}">
+                                <c:if test="${empty permission.children}">
                                     <tr data-tt-id="${vs1.index+1}-${vs2.index+1}"
                                         data-tt-parent-id="${vs1.index+1}">
                                         <td>${permission.name}</td>
