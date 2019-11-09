@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.util.*;
 
@@ -200,6 +201,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 
     @Override
     public List<Attendance> fuzzyAtt(String name) {
+
         return attendanceDao.fuzzyAtt(name);
     }
 }

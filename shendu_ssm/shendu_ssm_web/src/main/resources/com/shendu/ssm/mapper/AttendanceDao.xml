@@ -96,11 +96,13 @@
 
     <!--模糊查询-->
     <select id="fuzzyAtt" resultType="Attendance" parameterType="java.lang.String">
-        select * from attendance
-        <where>
-            <if test="name!=null and name!=''"> name like concat('%',#{name},'%')</if>
+        select a.id, a.name , a.attendance_time attendanceDate, a.status status,a.time createDate,a.s_id sId,s.stu_class stuClass
+        from attendance a left join student_detail s
+        on a.s_id = s.id
+          <where>
+            <if test="name!=null and name!=''"> a.name like concat('%',#{name},'%')</if>
 
-            <if test="name!=null and name!=''">or status like concat('%',#{name},'%')</if>
+            <if test="name!=null and name!=''">or a.status like concat('%',#{name},'%')</if>
 
             <!--<if test="username!=null and username!=''">or  userpwd like concat('%',#{username},'%')</if>-->
         </where>
