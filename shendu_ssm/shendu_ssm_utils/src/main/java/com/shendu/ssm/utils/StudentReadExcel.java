@@ -1,7 +1,7 @@
 package com.shendu.ssm.utils;
 
-import com.shendu.ssm.domain.Attendance;
-
+import com.shendu.ssm.domain.StudentDetail;
+import com.shendu.ssm.domain.StudentDetail;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -9,9 +9,6 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
-
-
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -23,28 +20,28 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ReadExcel {
+public class StudentReadExcel {
     //总行数  
-    private int totalRows = 0;    
+    private static int totalRows = 0;
     //总条数  
-    private int totalCells = 0;   
+    private static int totalCells = 0;
     //错误信息接收器  
-    private String errorMsg;  
+    private static String errorMsg;
     //构造方法  
-    public ReadExcel(){}  
+    public StudentReadExcel(){}
     //获取总行数  
-    public int getTotalRows()  { return totalRows;}   
+    public static int getTotalRows()  { return totalRows;}
     //获取总列数  
-    public int getTotalCells() {  return totalCells;}   
+    public static int getTotalCells() {  return totalCells;}
     //获取错误信息  
-    public String getErrorInfo() { return errorMsg; }
-    List<Attendance> attendanceList;
+    public static String getErrorInfo() { return errorMsg; }
+    public static List<StudentDetail> studentDetails;
   /** 
    * 读EXCEL文件，获取信息集合 
    * @param fielName 
    * @return 
    */  
-    public List<Attendance> getExcelInfo(MultipartFile mFile) {
+    public static List<StudentDetail> getExcelInfo(MultipartFile mFile) {
         String fileName = mFile.getOriginalFilename();//获取文件名
 
         try {  
@@ -55,11 +52,11 @@ public class ReadExcel {
             if (isExcel2007(fileName)) {  
                 isExcel2003 = false;  
             }
-            attendanceList = (List<Attendance>) createExcel(mFile.getInputStream(), isExcel2003);
+            studentDetails = (List<StudentDetail>) createExcel(mFile.getInputStream(), isExcel2003);
         } catch (Exception e) {  
             e.printStackTrace();  
         }
-        return attendanceList;
+        return studentDetails;
     }  
     
   /** 
@@ -69,7 +66,7 @@ public class ReadExcel {
    * @return 
    * @throws IOException 
    */  
-    public List<Attendance> createExcel(InputStream is, boolean isExcel2003) {
+    private static List<StudentDetail> createExcel(InputStream is, boolean isExcel2003) {
 
         try{  
             Workbook wb = null;
@@ -78,11 +75,11 @@ public class ReadExcel {
             } else {// 当excel是2007时,创建excel2007  
                 wb = new XSSFWorkbook(is);
             }
-            attendanceList = readExcelValue(wb);// 读取Excel里面客户的信息
+            studentDetails = readExcelValue(wb);// 读取Excel里面客户的信息
         } catch (IOException e) {
             e.printStackTrace();  
         }  
-        return attendanceList;
+        return studentDetails;
     }  
     
   /** 
@@ -90,51 +87,48 @@ public class ReadExcel {
    * @param wb 
    * @return 
    */  
-    private List<Attendance> readExcelValue(Workbook wb) {
+    private static List<StudentDetail> readExcelValue(Workbook wb) {
         // 得到第一个shell  
         Sheet sheet = wb.getSheetAt(0);
         // 得到Excel的行数  
-        this.totalRows = sheet.getPhysicalNumberOfRows();  
+        totalRows = sheet.getPhysicalNumberOfRows();
         // 得到Excel的列数(前提是有行数)  
         if (totalRows > 1 && sheet.getRow(0) != null) {  
-            this.totalCells = sheet.getRow(0).getPhysicalNumberOfCells();  
+            totalCells = sheet.getRow(0).getPhysicalNumberOfCells();
         }  
-        List<Attendance> attendanceList = new ArrayList<Attendance>();
+        List<StudentDetail> studentDetail = new ArrayList<StudentDetail>();
         // 循环Excel行数  
         for (int r = 1; r < totalRows; r++) {  
             Row row = sheet.getRow(r);
             if (row == null){  
                 continue;  
             }
-            Attendance attendance = new Attendance();
+            StudentDetail StudentDetail = new StudentDetail();
             // 循环Excel的列  
-            for (int c = 0; c < this.totalCells; c++) {  
+            for (int c = 0; c < totalCells; c++) {
                 Cell cell = row.getCell(c);
                 if (null != cell) {  
                     if (c == 0) {
 
-                        attendance.setName(getValue(cell));//姓名
+                        StudentDetail.setName(getValue(cell));//姓名
 
                     } else if (c == 1) {
                         if (getValue(cell) !=null){
-                            try {
-                                attendance.setAttendanceDate(DateUtils.string2Date(getValue(cell),"yyyy-MM-dd HH:mm"));//考勤时间
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
+
+                                StudentDetail.setPhone(getValue(cell));//学生电话
                         }
 
                     } else if (c == 2){
                         if (getValue(cell) !=null){
-                            attendance.setStuClass(getValue(cell));//学生班级
+                            StudentDetail.setParentPhone(getValue(cell));//家长电话
                         }
                     }
                 }  
             }  
             // 添加到list  
-            attendanceList.add(attendance);
+            studentDetail.add(StudentDetail);
         }  
-        return attendanceList;
+        return studentDetail;
     }  
       
     /** 
@@ -143,7 +137,7 @@ public class ReadExcel {
      * @param filePath 
      * @return 
      */  
-    public boolean validateExcel(String filePath) {  
+    private static boolean validateExcel(String filePath) {
         if (filePath == null || !(isExcel2003(filePath) || isExcel2007(filePath))) {  
             errorMsg = "文件名不是excel格式";  
             return false;  
@@ -152,12 +146,12 @@ public class ReadExcel {
     }  
       
     // @描述：是否是2003的excel，返回true是2003   
-    public static boolean isExcel2003(String filePath)  {    
+    private static boolean isExcel2003(String filePath)  {
          return filePath.matches("^.+\\.(?i)(xls)$");    
      }    
      
     //@描述：是否是2007的excel，返回true是2007   
-    public static boolean isExcel2007(String filePath)  {    
+    private static boolean isExcel2007(String filePath)  {
          return filePath.matches("^.+\\.(?i)(xlsx)$");    
      }
     /**
@@ -166,7 +160,7 @@ public class ReadExcel {
      * @return
      */
     //解决excel类型问题，获得数值
-    public  String getValue(Cell cell) {
+    private static   String getValue(Cell cell) {
         String value = "";
         if(null==cell){
             return value;

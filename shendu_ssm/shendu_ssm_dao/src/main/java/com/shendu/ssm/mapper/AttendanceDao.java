@@ -20,4 +20,6 @@ public interface AttendanceDao {
     public Attendance findById(Integer id);
 
     public void deleteAtt(Integer id);
+
+    List<Attendance> findByIds(@Param("list")Integer[] ids);
 }

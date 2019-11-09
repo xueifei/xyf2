@@ -56,19 +56,7 @@ public class AttendanceServiceImpl implements AttendanceService {
         return i;
     }
 
-    @Override
-    public List<Attendance> findStuClassByList(List<Attendance> attendances) {
-        List<Attendance> list = new ArrayList<>();
 
-        for (Attendance attendance : attendances) {
-            StudentDetail byId = studentDetailDao.findById(attendance.getSId());
-            Attendance attendance1 = new Attendance();
-            BeanUtils.copyProperties(attendance,attendance1);
-            attendance1.setStudent(byId);
-            list.add(attendance1);
-        }
-        return list;
-    }
 
     @Override
     public List<Attendance> findByCreateDate(int page, int size) throws ParseException {
@@ -90,12 +78,17 @@ public class AttendanceServiceImpl implements AttendanceService {
         List<Note> noteList = new ArrayList<>();
         for (Attendance attendance : byCreateDate) {
 
-            StudentDetail byId = studentDetailDao.findById(attendance.getSId());
-            attendance.setStudent(byId);
+            List<StudentDetail> byNames = studentDetailDao.findByName(attendance.getName());
+            if (byNames.size() == 1){
+                attendance.setStudent(byNames.get(0));
+            }else {
+                throw new  RuntimeException("学生姓名重复");
+            }
+
             //迟到短信
             if (attendance.getStatus() == 1){
                 Note note = new Note();
-                String mess = MessageXsendUtils.getmessige(attendance.getStudent().getPhone(),null);
+                String mess = MessageXsendUtils.getmessige1(attendance.getStudent().getPhone(),null);
                 Map map = (Map) JSON.parse(mess);
                 String value = (String) map.get("status");
                 if (value.equals("error")){
@@ -116,7 +109,7 @@ public class AttendanceServiceImpl implements AttendanceService {
                 m.put("current_date",DateUtils.date2String(new Date(),"yyyy-MM-dd"));
                 m.put("current_time",DateUtils.date2String(new Date(),"HH:mm"));
                 String code = JSONUtils.toJSONString(m);
-                String mess = MessageXsendUtils.getmessige(attendance.getStudent().getPhone(),code);
+                String mess = MessageXsendUtils.getmessige2(attendance.getStudent().getPhone(),code);
                 Map map = (Map) JSON.parse(mess);
                 String value = (String) map.get("status");
                 if (value.equals("error")){
@@ -134,12 +127,12 @@ public class AttendanceServiceImpl implements AttendanceService {
                 m2.put("student_name",attendance.getName());
                 String code1 = JSONUtils.toJSONString(m2);
                 Note note1 = new Note();
-                String mess1 = MessageXsendUtils.getmessige(attendance.getStudent().getParentPhone(),code1);
+                String mess1 = MessageXsendUtils.getmessige3(attendance.getStudent().getParentPhone(),code1);
                 Map map1 = (Map) JSON.parse(mess1);
-                String value1 = (String) map.get("status");
-                if (value.equals("error")){
+                String value1 = (String) map1.get("status");
+                if (value1.equals("error")){
                     note1.setStatus(1);
-                } else if (value.equals("success")){
+                } else if (value1.equals("success")){
                     note1.setStatus(0);
                 }
                 note1.setName(attendance.getName());
@@ -150,6 +143,11 @@ public class AttendanceServiceImpl implements AttendanceService {
         }
 
         return noteList;
+    }
+
+    @Override
+    public List<Attendance> findByIds(Integer[] ids) {
+        return attendanceDao.findByIds(ids);
     }
 
     //获取当天凌晨时间
@@ -196,4 +194,6 @@ public class AttendanceServiceImpl implements AttendanceService {
         }
         return false;
     }
+
+
 }

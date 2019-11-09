@@ -30,4 +30,6 @@ public interface IPermissionService {
 	Set<String> listPermissionURLs(String userName);
 
     List<Permission> findAll();
+
+	void createPermissionTreeList(Permission permission,List<Permission> list);
 }

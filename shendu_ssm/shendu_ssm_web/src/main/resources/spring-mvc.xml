@@ -34,6 +34,7 @@
     <mvc:resources location="/img/" mapping="/img/**" />
     <mvc:resources location="/js/" mapping="/js/**" />
     <mvc:resources location="/plugins/" mapping="/plugins/**" />
+    <mvc:resources location="/static/" mapping="/static/**" />
 
     <mvc:annotation-driven>
         <mvc:message-converters>

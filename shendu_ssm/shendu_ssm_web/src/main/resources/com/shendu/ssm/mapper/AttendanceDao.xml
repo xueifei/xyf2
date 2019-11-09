@@ -1,79 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.shendu.ssm.mapper.AttendanceDao" >
-<!--    <resultMap id="BaseResultMap" type="cn.com.entity.people" >
-        <id column="id" property="id" jdbcType="INTEGER" />
-        <result column="username" property="userName" jdbcType="VARCHAR" />
-        <result column="password" property="password" jdbcType="VARCHAR" />
-    </resultMap>
-    <sql id="Base_Column_List" >
-    id, username, password
-  </sql>
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-        select
-        <include refid="Base_Column_List" />
-        from people
-        where id = #{id,jdbcType=INTEGER}
-    </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from people
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-    <insert id="insert" parameterType="cn.com.vtech.entity.people" >
-    insert into people (id, username, password)
-    values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR})
-  </insert>
-    <insert id="insertSelective" parameterType="cn.com.vtech.entity.people" >
-        insert into people
-        <trim prefix="(" suffix=")" suffixOverrides="," >
-            <if test="id != null" >
-                id,
-            </if>
-            <if test="userName != null" >
-                username,
-            </if>
-            <if test="password != null" >
-                password,
-            </if>
 
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides="," >
-            <if test="id != null" >
-                #{id,jdbcType=INTEGER},
-            </if>
-            <if test="userName != null" >
-                #{userName,jdbcType=VARCHAR},
-            </if>
-            <if test="password != null" >
-                #{password,jdbcType=VARCHAR},
-            </if>
-        </trim>
-    </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="cn.com.vtech.entity.people" >
-        update people
-        <set >
-            <if test="userName != null" >
-                user_name = #{userName,jdbcType=VARCHAR},
-            </if>
-            <if test="password != null" >
-                password = #{password,jdbcType=VARCHAR},
-            </if>
-        </set>
-        where id = #{id,jdbcType=INTEGER}
-    </update>
-    <update id="updateByPrimaryKey" parameterType="cn.com.vtech.entity.people" >
-    update people
-    set username = #{userName,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>-->
 
 
     <insert id="insertInfoBatch" parameterType="java.util.List">
-        insert into attendance ( name, attendance_time, status,time,s_id)
+        insert into attendance ( name, attendance_time, status,time,s_id,stu_class)
         values
         <foreach collection="list" item="item" index="index" separator=",">
-            ( #{item.name,jdbcType=VARCHAR}, #{item.attendanceDate,jdbcType=TIMESTAMP},#{item.status,jdbcType=INTEGER},#{item.createDate,jdbcType=TIMESTAMP},#{item.sId,jdbcType=INTEGER})
+            ( #{item.name,jdbcType=VARCHAR}, #{item.attendanceDate,jdbcType=TIMESTAMP},#{item.status,jdbcType=INTEGER},#{item.createDate,jdbcType=TIMESTAMP},#{item.sId,jdbcType=INTEGER},#{item.stuClass,jdbcType=VARCHAR})
         </foreach>
     </insert>
     <select id="findByCreateDate"  parameterType="java.util.Date" resultType="com.shendu.ssm.domain.Attendance">
@@ -88,6 +23,12 @@
 
     <select id="findById" resultType="com.shendu.ssm.domain.Attendance">
         select * from attendance where  id = #{id}
+    </select>
+    <select id="findByIds" resultType="com.shendu.ssm.domain.Attendance">
+        select * from attendance where id in
+            <foreach collection="list" item="id" open="(" close=")" separator="," >
+               #{id,jdbcType=INTEGER}
+            </foreach>
     </select>
 
     <delete id="deleteAtt">
