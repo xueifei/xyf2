@@ -89,16 +89,20 @@ public class AttendanceServiceImpl implements AttendanceService {
             //迟到短信
             if (attendance.getStatus() == 1){
                 Note note = new Note();
-                String mess = MessageXsendUtils.getmessige1(attendance.getStudent().getPhone(),null);
-                Map map = (Map) JSON.parse(mess);
-                String value = (String) map.get("status");
+                Map map = new HashMap();
+                map.put("student_name",attendance.getName());
+                String code2 = JSONUtils.toJSONString(map);
+                String mess3 = MessageXsendUtils.getmessige1(attendance.getStudent().getParentPhone(),code2);
+                Map map2 = (Map) JSON.parse(mess3);
+
+                String value = (String) map2.get("status");
                 if (value.equals("error")){
                     note.setStatus(1);
                 } else if (value.equals("success")){
                     note.setStatus(0);
                 }
                 note.setName(attendance.getName());
-                note.setPhone(attendance.getStudent().getPhone());
+                note.setPhone(attendance.getStudent().getParentPhone());
                 note.setTemplateId(1);
                 noteList.add(note);
             }

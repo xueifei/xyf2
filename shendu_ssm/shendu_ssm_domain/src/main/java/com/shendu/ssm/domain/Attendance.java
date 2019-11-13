@@ -23,9 +23,11 @@ public class Attendance {
     private Integer sId;//学生编号，唯一标识，对应学生详情表id
     private StudentDetail student;
 
+
     public Date getCreateDate() {
         return new Date();
     }
+
 
     public String getStatusStr() {
         if (status != null) {

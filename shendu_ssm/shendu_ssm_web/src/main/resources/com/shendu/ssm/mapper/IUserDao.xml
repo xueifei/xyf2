@@ -13,7 +13,7 @@
     </select>
 
     <select id="selectUserList" resultType="User">
-        select * from USER
+        select * from user
     </select>
 
     <insert id="insertUser" useGeneratedKeys="true" keyProperty="id" keyColumn="id">

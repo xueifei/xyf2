@@ -3,18 +3,18 @@
 <mapper namespace="com.shendu.ssm.mapper.AttendanceDao" >
 
 
-
     <insert id="insertInfoBatch" parameterType="java.util.List">
-        insert into attendance ( name, attendance_time, status,time,s_id,stu_class)
+        insert into attendance ( name, attendance_time, status,time,s_id)
         values
         <foreach collection="list" item="item" index="index" separator=",">
-            ( #{item.name,jdbcType=VARCHAR}, #{item.attendanceDate,jdbcType=TIMESTAMP},#{item.status,jdbcType=INTEGER},#{item.createDate,jdbcType=TIMESTAMP},#{item.sId,jdbcType=INTEGER},#{item.stuClass,jdbcType=VARCHAR})
+            ( #{item.name,jdbcType=VARCHAR}, #{item.attendanceDate,jdbcType=TIMESTAMP},#{item.status,jdbcType=INTEGER},#{item.createDate,jdbcType=TIMESTAMP},#{item.sId,jdbcType=INTEGER})
         </foreach>
     </insert>
     <select id="findByCreateDate"  parameterType="java.util.Date" resultType="com.shendu.ssm.domain.Attendance">
-       select a.id, a.name , a.attendance_time attendanceDate, a.status status,a.time createDate,a.s_id sId,s.stu_class stuClass
+       select a.id, a.name , a.attendance_time attendanceDate, a.status status,a.time createDate,s.stu_class stuClass
         from attendance a,student_detail s
-        where a.time > #{date,jdbcType=DATE} AND a.s_id = s.id
+        where a.time > #{date,jdbcType=DATE} AND a.name = s.name
+        order by attendance_time desc
     </select>
 
     <update id="updateAtt">
