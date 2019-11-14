@@ -198,6 +198,8 @@
 									<option>3</option>
 									<option>4</option>
 									<option>5</option>
+									<option>50</option>
+									<option>100</option>
 								</select> 条
 							</div>
 						</div>
