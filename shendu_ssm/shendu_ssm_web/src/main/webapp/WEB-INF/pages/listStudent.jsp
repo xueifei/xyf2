@@ -139,6 +139,8 @@
 							<form action="${pageContext.request.contextPath}/student/updateStuClassBatch"
 								  method="post">
 							<!--数据列表-->
+								<div  style=" OVERFLOW-X: scroll; scrollbar-face-color:#B3DDF7;scrollbar-shadow-color:#B3DDF7;scrollbar-highlight-color:#B3DDF7;scrollbar-3dlight-color:#EBEBE4;scrollbar-darkshadow-color:#EBEBE4;
+							scrollbar-track-color:#F4F4F0;scrollbar-arrow-color:#000000; width:100%;HEIGHT: 100%" align=center>
 							<table id="dataList"
 								class="table table-bordered table-striped table-hover dataTable">
 								<thead>
@@ -185,6 +187,7 @@
                             </tr>
                             </tfoot>-->
 							</table>
+								</div>
 							<!--数据列表/-->
 								<div class="panel panel-default">
 									<div class="panel-heading">批量修改班级</div>
